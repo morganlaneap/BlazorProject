@@ -1,0 +1,40 @@
+@page "/exampleform"
+
+<h3>ExampleForm</h3>
+
+<p>Enter some details</p>
+
+<EditForm Model="_formData" OnSubmit="OnSubmit">
+    <label for="Forename">Forename:</label>
+    <InputText class="form-control" type="text" id="Forename" @bind-Value="_formData.Forename" required />
+
+    <label for="Surname">Surname:</label>
+    <InputText class="form-control" type="text" id="Surname" @bind-Value="_formData.Surname" name="Surname" required />
+
+    <label for="EmailAddress">Email Address:</label>
+    <InputText class="form-control" type="email" id="EmailAddress" @bind-Value="_formData.EmailAddress" name="EmailAddress" required />
+    
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<p>Your form is @FormStatus</p>
+
+@code {
+    class FormModel
+    {
+        public string Forename { get; set; }
+
+        public string Surname { get; set; }
+        
+        public string EmailAddress { get; set; }
+    }
+
+    readonly FormModel _formData = new();
+
+    public string FormStatus = "Not Submitted";
+
+    void OnSubmit()
+    {
+        FormStatus = "Submitted";
+    }
+}
