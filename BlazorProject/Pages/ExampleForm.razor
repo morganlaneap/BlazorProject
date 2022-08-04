@@ -1,19 +1,23 @@
 @page "/exampleform"
+@using System.ComponentModel.DataAnnotations
 
 <h3>ExampleForm</h3>
 
 <p>Enter some details</p>
 
-<EditForm Model="_formData" OnSubmit="OnSubmit">
+<EditForm Model="_formData" OnValidSubmit="OnValidSubmit">
+     <DataAnnotationsValidator />
+     <ValidationSummary />
+     
     <label for="Forename">Forename:</label>
-    <InputText class="form-control" type="text" id="Forename" @bind-Value="_formData.Forename" required />
+    <InputText class="form-control" id="Forename" @bind-Value="_formData.Forename"/>
 
     <label for="Surname">Surname:</label>
-    <InputText class="form-control" type="text" id="Surname" @bind-Value="_formData.Surname" name="Surname" required />
+    <InputText class="form-control" id="Surname" @bind-Value="_formData.Surname" />
 
     <label for="EmailAddress">Email Address:</label>
-    <InputText class="form-control" type="email" id="EmailAddress" @bind-Value="_formData.EmailAddress" name="EmailAddress" required />
-    
+    <InputText class="form-control" id="EmailAddress" @bind-Value="_formData.EmailAddress" />
+
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
 
@@ -22,10 +26,14 @@
 @code {
     class FormModel
     {
+        [Required]
         public string Forename { get; set; }
 
+        [Required]
         public string Surname { get; set; }
         
+        [Required]
+        [EmailAddress]
         public string EmailAddress { get; set; }
     }
 
@@ -33,7 +41,7 @@
 
     public string FormStatus = "Not Submitted";
 
-    void OnSubmit()
+    void OnValidSubmit()
     {
         FormStatus = "Submitted";
     }
